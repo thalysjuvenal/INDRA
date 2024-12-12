@@ -2,8 +2,8 @@
 #Include "Totvs.ch"
 
 /*/{Protheus.doc} GFEA1181
-	A função GFEA1181 altera a tributação de um registro na tabela `GXG` para o valor "2-Isento", 
-	caso a tributação atual não seja "1-Tributado" ou "2-Isento". 
+	A função GFEA1181 altera a tributação de um registro na tabela `GXG` para o valor "2-Isento",
+	caso a tributação atual não seja "1-Tributado" ou "2-Isento".
 	Além disso, zera os valores relacionados ao imposto.
 
 @author Thalys Augusto
@@ -25,6 +25,14 @@ User Function GFEA1181()
 		GXG->GXG_BASIMP := nBaseImp
 		GXG->GXG_TRBIMP := "2"
 		GXG->(MsUnlock())
+	Else
+		RecLock('GXG', .F.)
+		GXG->GXG_VLIMP := 0
+		GXG->GXG_PCIMP := 0
+		GXG->GXG_BASIMP := nBaseImp
+		GXG->GXG_TRBIMP := "2"
+		GXG->(MsUnlock())
+	EndIf
 	EndIf
 
 	FWRestArea(aArea)
